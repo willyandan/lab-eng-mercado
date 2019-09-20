@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projeto: Willyan _ Lab de engenharia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+  <link rel="stylesheet" href="src/style/style.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://bulma.io">
+        <strong>Mercado O(Log N)</strong>
+      </a>
+
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar-items">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbar-items" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="index.html">
+          Home
+        </a>
+
+        <a class="navbar-item" href="estoque.html">
+          Estoque
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero is-primary">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Estoque
+        </h1>
+      </div>
+    </div>
+  </header>
+  <section class="options container-fluid">
+    <div class="box has-text-right">
+      <button class="button is-info" onclick="openModal('modalEditProduct')">
+        <span class="icon">
+          <i class="fas fa-plus"></i>
+        </span>
+        <span>Adicionar Produto</span>
+      </button>
+    </div>
+  </section>
+  <main>
+    <table class="table is-hoverable is-fullwidth is-bordered">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Código</th>
+          <th>Nome</th>
+          <th>Marca</th>
+          <th>Unidade</th>
+          <th>Preço Uni.</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>0101010101</td>
+          <td>Rosquinha X</td>
+          <td>Marca X</td>
+          <td>Unidade</td>
+          <td class="has-text-right">R$ 5,00</td>
+          <td>
+            <button class="button is-warning" onclick="openModal('modalEditProduct')">
+              <span class="icon is-small">
+                <i class="far fa-edit"></i>
+              </span>
+            </button>
+            <button class="button is-danger">
+              <span class="icon is-small">
+                <i class="fas fa-times"></i>
+              </span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        <strong>Supermercados O(log n)</strong> by Willyan Antunes.
+      </p>
+    </div>
+  </footer>
+
+  <div class="modal" id="modalEditProduct">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Editar produto</p>
+        <button class="delete" aria-label="close" onclick="closeModal('modalEditProduct')"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label">Codigo</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="Código">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Nome</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="Nome">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Marca</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="Marca">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Unidade</label>
+          <div class="control">
+            <div class="select">
+              <select>
+                <option>Unidade</option>
+                <option>Kilo</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Preço unitário</label>
+          <div class="control">
+            <input class="input" type="number" step="0.01" min="0" placeholder="Preço">
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot has-text-right">
+        <button class="button is-success" onclick="updateProduct()">Salvar</button>
+        <button class="button" onclick="closeModal('modalEditProduct')">Cancelar</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="src/js/compra.js"></script>
+</body>
+
+</html>
