@@ -13,7 +13,10 @@ plugins {
     // Apply the application plugin to add support for building a CLI application
     id 'war'
     id 'org.gretty' version '2.2.0'
+    id 'application'
 }
+
+mainClassName = 'projeto.App'
 
 repositories {
     // Use jcenter for resolving dependencies.
@@ -32,4 +35,3 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.7'
 
 }
-
