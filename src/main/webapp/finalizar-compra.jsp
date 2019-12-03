@@ -1,3 +1,7 @@
+<%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix = "c"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import ="model.Produto"%>
+<%@page import ="java.util.List"%>
 <!DOCTYPE html>
 <html>
 
@@ -26,11 +30,11 @@
 
     <div id="navbar-items" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item" href="index.html">
+        <a class="navbar-item" href="/projeto/">
           Home
         </a>
 
-        <a class="navbar-item" href="estoque.html">
+        <a class="navbar-item" href="estoque">
           Estoque
         </a>
       </div>
@@ -51,30 +55,36 @@
     <table class="table is-hoverable is-fullwidth is-bordered">
       <thead>
         <tr>
-          <th>Pos</th>
           <th>Código</th>
           <th>Nome</th>
           <th>Preço Uni.</th>
           <th>Qtd</th>
           <th>Total</th>
-          
+
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>1</td>
-          <td>0101010101</td>
-          <td>Rosquinha X (un. Unidade)</td>
-          <td class="has-text-right">R$ 5,00</td>
-          <td class="has-text-right">3</td>
-          <td class="has-text-right">R$ 15,00</td>
+            <%
+                List<Produto> produtos = (List)request.getAttribute("prods");
+                double total = (double) request.getAttribute("total");
+                for(Produto p: produtos){
+                    out.print("<tr>");
+                    out.print("<td>" + p.getId() + "</td>");
+                    out.print("<td>" + p.getNome() + "</td>");
+                    out.print("<td>" + p.getPreco() + "</td>");
+                    out.print("<td>" + p.getQuantidade() + "</td>");
+                    out.print("<td>" + p.getPreco() * p.getQuantidade() + "</td>");
+                    out.print("</tr>");
+                }
+            %>
         </tr>
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="5"></td>
+          <td colspan="4"></td>
           <td class="has-text-right">
-            <strong>Preço total:</strong> <span> R$ 0,00</span>
+            <strong>Preço total:</strong> <span> R$ <% out.print(total); %></span>
           </td>
         </tr>
       </tfoot>
@@ -88,7 +98,6 @@
       </p>
     </div>
   </footer>
-  <script src="src/js/compra.js"></script>
 </body>
 
 </html>
