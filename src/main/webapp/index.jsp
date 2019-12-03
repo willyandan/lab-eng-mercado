@@ -1,3 +1,5 @@
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ page contentType = "text/html" pageEncoding = "UTF-8" %>
 <!DOCTYPE html>
 <html>
 
@@ -26,11 +28,11 @@
 
     <div id="navbar-items" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item" href="index.html">
+        <a class="navbar-item" href="/projeto/">
           Home
         </a>
 
-        <a class="navbar-item" href="estoque.html">
+        <a class="navbar-item" href="/projeto/estoque">
           Estoque
         </a>
       </div>
@@ -52,18 +54,18 @@
 
   <section class="options container-fluid">
     <div class="box has-text-right">
-      <button class="button is-info" onclick="openModal('modalSearchProduct')">
+      <button class="button is-info" onclick="openSearchProductModal()">
         <span class="icon">
           <i class="fas fa-plus"></i>
         </span>
         <span>Adicionar item</span>
       </button>
-      <a class="button is-success" href="finalizar-compra.html">
+      <button class="button is-success" id="finalizar-compra">
         <span class="icon">
           <i class="fas fa-cart-arrow-down"></i>
         </span>
         <span>Finalizar Compra</span>
-      </a>
+      </button>
     </div>
   </section>
 
@@ -71,7 +73,6 @@
     <table class="table is-hoverable is-fullwidth is-bordered">
       <thead>
         <tr>
-          <th>Pos</th>
           <th>Código</th>
           <th>Nome</th>
           <th>Marca</th>
@@ -81,34 +82,13 @@
           <th>Ações</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>0101010101</td>
-          <td>Rosquinha X (un. Unidade)</td>
-          <td>Marca X</td>
-          <td class="has-text-right">R$ 5,00</td>
-          <td class="has-text-right">3</td>
-          <td class="has-text-right">R$ 15,00</td>
-          <td>
-            <button class="button is-warning" onclick="openModal('modalEditProduct')">
-              <span class="icon is-small">
-                <i class="far fa-edit"></i>
-              </span>
-            </button>
-            <button class="button is-danger">
-              <span class="icon is-small">
-                <i class="fas fa-times"></i>
-              </span>
-            </button>
-          </td>
-        </tr>
+      <tbody id="tbody">
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="6"></td>
+          <td colspan="5"></td>
           <td class="has-text-right">
-            <strong>Preço total:</strong> <span> R$ 0,00</span>
+            <strong>Preço total:</strong> R$ <span id="total-compra">0,00</span>
           </td>
           <td></td>
         </tr>
@@ -134,10 +114,10 @@
       <section class="modal-card-body">
         <div class="field has-addons">
           <div class="control is-expanded">
-            <input class="input" type="text" placeholder="Buscar produto">
+            <input class="input" type="text" id="search-product-input" placeholder="Buscar produto">
           </div>
           <div class="control">
-            <a class="button is-info">
+            <a class="button is-info" id="search-product">
               Buscar
             </a>
           </div>
@@ -156,84 +136,33 @@
           </thead>
           <tbody>
             <tr>
-              <td>0101010101</td>
-              <td>Rosquinha X</td>
-              <td>Marca X</td>
-              <td>Unidade</td>
-              <td class="has-text-right">R$ 5,00</td>
+              <td><span id="sp-cod"></span></td>
+              <td><span id="sp-nome"></span> </td>
+              <td><span id="sp-marca"></span></td>
+              <td><span id="sp-unidade"></span></td>
+              <td class="has-text-right">R$ <span id="sp-preco"></span></td>
               <td>
                 <div class="control">
-                  <input class="input" type="number" placeholder="Qtd.">
+                  <input class="input" type="number" placeholder="Qtd." id="sp-qtd">
                 </div>
               </td>
               <td class="has-text-right">
-                R$ 0,00
+                R$ <span id="sp-total"></span>
               </td>
             </tr>
           </tbody>
         </table>
       </section>
       <footer class="modal-card-foot has-text-right">
-        <button class="button is-success" onclick="addItemToCart()">Salvar</button>
+        <button class="button is-success" id="btn-add-item">Salvar</button>
         <button class="button" onclick="closeModal('modalSearchProduct')">Cancelar</button>
       </footer>
     </div>
   </div>
-
-  <div class="modal" id="modalEditProduct">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Editar produto</p>
-        <button class="delete" aria-label="close" onclick="closeModal('modalEditProduct')"></button>
-      </header>
-      <section class="modal-card-body">
-        <div class="field">
-          <label class="label">Codigo</label>
-          <div class="control">
-            <input class="input" type="text" readonly placeholder="Código" value="0101010101">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Nome</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="Nome" readonly value="Rosquinha X">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Marca</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="Marca" readonly value="Marca X">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Unidade</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="Unidade" readonly value="Unidade">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Preço</label>
-          <div class="control">
-            <input class="input" type="number" step="0.01" min="0" placeholder="Preço" value="5.00">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Quantidade</label>
-          <div class="control">
-            <input class="input" type="number" step="0.01" min="0"placeholder="Quantidade" value="3">
-          </div>
-        </div>
-
-      </section>
-      <footer class="modal-card-foot has-text-right">
-        <button class="button is-success" onclick="updateProduct()">Salvar</button>
-        <button class="button" onclick="closeModal('modalEditProduct')">Cancelar</button>
-      </footer>
-    </div>
-  </div>
-
-  <script src="src/js/compra.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="/projeto/src/js/Api/Api.js"></script>
+  <script src="/projeto/src/js/ProductList/ProductList.js"></script>
+  <script src="/projeto/src/js/home.js"></script>
 </body>
 
 </html>
